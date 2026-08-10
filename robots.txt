@@ -1,0 +1,9 @@
+# PLACEHOLDER — verify before launch. This is prototype content generated
+# alongside the site redesign; confirm the production domain and any
+# paths that should be disallowed (e.g. staging, admin, search) before
+# deploying.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.tumusiimekabega.com/sitemap.xml

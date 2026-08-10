@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER — prototype sitemap listing only the homepage. Regenerate
+     (ideally via a build step or CMS) once article, practice-area, bio and
+     other inner pages exist, and confirm the production domain below. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.tumusiimekabega.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
