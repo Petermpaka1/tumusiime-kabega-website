@@ -494,14 +494,15 @@ nav.main > ul > li{position:relative}
 .cblock .v{font-size:16px;color:var(--ink);line-height:1.6}
 .cblock .v a{color:var(--navy);text-decoration:none;font-weight:500}
 .cblock .v a:hover{color:var(--gold-t)}
-.mapbox{
-  background:var(--paper-2);border:1px solid var(--hair);min-height:280px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-  text-align:center;padding:30px;
+.map-card{display:flex;flex-direction:column;gap:16px}
+.map-embed{
+  position:relative;border:1px solid var(--hair);overflow:hidden;
+  aspect-ratio:4/3;min-height:260px;background:var(--paper-2);
 }
-.mapbox .pin{width:34px;height:34px;border:2px solid var(--gold);border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
-.mapbox .t{font-family:var(--serif);font-size:17px;color:var(--navy);font-weight:600}
-.mapbox .s{font-size:13px;color:var(--grey-l)}
+.map-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.map-embed:focus-within{outline:3px solid var(--gold);outline-offset:2px}
+.map-card .btn{width:100%;justify-content:center}
+@media(max-width:900px){.map-embed{aspect-ratio:16/10}}
 @media(max-width:900px){.contact-in{grid-template-columns:1fr;gap:36px}}
 
 /* ================= GUIDE (tier-2 conversion) ================= */
@@ -1436,16 +1437,30 @@ body.proto-off{padding-bottom:0}
         </div>
       </div>
 
-      <!-- TODO (Phase 2 backend): replace with a real embed once an API key
-           and consent-gated loading are in place — e.g. a lazy-loaded
-           Google Maps iframe/JS API, or a static map image as a lighter
-           alternative. Do not wire this to a live map without a consent
-           mechanism, since embeds set third-party cookies. -->
-      <div class="mapbox">
-        <div class="pin" aria-hidden="true"></div>
-        <div class="t">Plot 9 Yusuf Lule Road / Kitante Road</div>
-        <div class="s">Kololo, Kampala</div>
-        <a class="link-more" href="#" style="margin-top:8px">Open in Maps <span class="ar" aria-hidden="true">→</span></a>
+      <!-- Google Maps — keyless embed (google.com/maps?...&output=embed).
+           No API key is used or required for this approach, so there is
+           nothing to keep out of source control here. Query is built from
+           the verified address in the "Address" cblock above.
+           If a fully-supported, officially documented embed is wanted later,
+           swap the iframe src for the Maps Embed API instead:
+             https://www.google.com/maps/embed/v1/place?key=YOUR_KEY&q=...
+           That requires enabling "Maps Embed API" in Google Cloud Console
+           and billing on the project. The key must never be committed —
+           inject it at build/deploy time (e.g. a CI secret written into the
+           HTML during deploy, or a small server-side proxy that appends it),
+           and restrict the key to this site's domain(s) in Cloud Console. -->
+      <div class="map-card">
+        <div class="map-embed">
+          <iframe
+            src="https://www.google.com/maps?q=Tumusiime%2C%20Kabega%20%26%20Co.%20Advocates%2C%20Plot%209%20Yusuf%20Lule%20Road%2C%20Kitante%20Road%2C%20Kampala%2C%20Uganda&z=16&output=embed"
+            title="Map showing Tumusiime, Kabega & Co. Advocates, Plot 9 Yusuf Lule Road / Kitante Road, Kampala, Uganda"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+        <a class="btn btn-p" href="https://www.google.com/maps/dir/?api=1&destination=Tumusiime%2C%20Kabega%20%26%20Co.%20Advocates%2C%20Plot%209%20Yusuf%20Lule%20Road%2C%20Kitante%20Road%2C%20Kampala%2C%20Uganda" target="_blank" rel="noopener noreferrer">
+          Get Directions <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
   </div>
@@ -1911,7 +1926,6 @@ body.proto-off{padding-bottom:0}
          static markup below, plus dedicated article/bio/practice-area pages.
        - Search indexing to back the search overlay (currently Phase 3 stub).
        - Analytics (with a cookie/consent banner if any tool sets cookies).
-       - A Google Maps embed for the contact section (see TODO near .mapbox).
        - Domain + hosting configuration, and real canonical/OG image assets.
      ===================================================================== */
   function looksLikeEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
@@ -2062,7 +2076,7 @@ body.proto-off{padding-bottom:0}
     ['.careers-in > div',                    130,   0],
     ['.enq-side, form.enq',                  130,   0],
     ['#contact .sec-head',                     0,   0],
-    ['#contact .cblock, .mapbox',             55,  40]
+    ['#contact .cblock, .map-card',            55,  40]
   ];
 
   /* Two observers, each with one job.
