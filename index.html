@@ -57,10 +57,15 @@
 
   /* Self-hosted in production: place woff2 files alongside and add @font-face.
      Until then these stacks resolve locally on every platform — no third-party
-     request in front of LCP, and no data leaving the visitor's browser. */
-  --serif:"Source Serif 4","Source Serif Pro","Charter","Iowan Old Style",Georgia,"Times New Roman",serif;
+     request in front of LCP, and no data leaving the visitor's browser.
+     --display is a bold, rounded/geometric sans for headings and numerals —
+     the site's typographic register moved from an editorial serif to this
+     bolder voice; each fallback approximates the same rounded-geometric
+     character on its own platform. */
+  --display:"Poppins","Century Gothic","Avenir Next","Nunito Sans","Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;
   --sans:"Inter","Segoe UI Variable Text",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 
+  --radius:6px;
   --max:1240px;
   --gut:24px;
 }
@@ -74,7 +79,7 @@ body{
 }
 img{max-width:100%;display:block}
 a{color:inherit}
-h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:600;line-height:1.15;letter-spacing:-.012em}
+h1,h2,h3,h4{margin:0;font-family:var(--display);font-weight:700;line-height:1.1;letter-spacing:-.01em}
 p{margin:0}
 ul{margin:0;padding:0;list-style:none}
 
@@ -187,48 +192,15 @@ header.site{
 }
 .mark span{font-size:15px;font-weight:700;letter-spacing:.09em;line-height:1;padding-left:.09em}
 .mark i{display:block;width:18px;height:2px;background:var(--gold)}
-.brand .wm{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--navy);letter-spacing:.02em;line-height:1.1;white-space:nowrap}
+.brand .wm{font-family:var(--display);font-size:19px;font-weight:700;color:var(--navy);letter-spacing:.02em;line-height:1.1;white-space:nowrap}
 .brand .wm em{font-style:normal;color:var(--gold);font-weight:400}
 .brand .sub{font-size:9.5px;letter-spacing:.3em;color:var(--gold-t);font-weight:700;margin-top:3px}
-
-nav.main{margin-left:auto}
-nav.main > ul{display:flex;gap:2px}
-nav.main > ul > li{position:relative}
-.nav-a{
-  display:block;padding:10px 14px;text-decoration:none;
-  font-size:14px;font-weight:500;color:var(--navy);letter-spacing:.005em;
-  background:none;border:0;font-family:inherit;cursor:pointer;
-}
-.nav-a:hover,.nav-a[aria-expanded="true"]{color:var(--gold-t)}
-.nav-a .caret{font-size:9px;margin-left:5px;color:var(--grey-l)}
-
-.mega{
-  position:absolute;left:50%;transform:translateX(-50%);top:100%;
-  background:#fff;border:1px solid var(--hair);border-top:3px solid var(--gold);
-  box-shadow:0 24px 60px -20px rgba(16,38,63,.28);
-  padding:30px 34px;display:none;z-index:130;
-}
-.mega[data-open="true"]{display:block}
-.mega.w3{width:760px}
-.mega.w1{width:290px;left:auto;right:0;transform:none}
-.mega-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.mega h3{
-  font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--gold-t);margin-bottom:14px;
-  padding-bottom:9px;border-bottom:1px solid var(--hair-2);
-}
-.mega li + li{margin-top:2px}
-.mega li a{
-  display:block;padding:4px 0;font-size:13.5px;color:var(--ink);
-  text-decoration:none;border-bottom:1px solid transparent;
-}
-.mega li a:hover{color:var(--gold-t)}
 
 .hdr-cta{
   flex:none;display:inline-flex;align-items:center;gap:9px;font:inherit;
   background:var(--navy);color:#fff;text-decoration:none;cursor:pointer;
   padding:13px 20px;font-size:13px;font-weight:600;letter-spacing:.04em;
-  border:1px solid var(--navy);transition:background .18s;
+  border:1px solid var(--navy);border-radius:var(--radius);transition:background .18s;
 }
 .hdr-cta:hover{background:var(--navy-l)}
 .hdr-search{
@@ -236,13 +208,16 @@ nav.main > ul > li{position:relative}
 }
 .hdr-search:hover{color:var(--gold-t)}
 
-.burger{display:none;flex:none;background:none;border:1px solid var(--hair);padding:10px 12px;cursor:pointer}
+.burger{display:block;flex:none;margin-left:auto;background:none;border:1px solid var(--hair);border-radius:var(--radius);padding:10px 12px;cursor:pointer}
 .burger span{display:block;width:20px;height:2px;background:var(--navy);margin:4px 0}
 
-@media(max-width:1080px){
-  nav.main,.hdr-cta,.hdr-search{display:none}
-  .burger{display:block;margin-left:auto}
+@media(max-width:680px){
+  .hdr-search,.hdr-cta{display:none}
   .hdr{height:72px}
+}
+@media(max-width:400px){
+  .brand .wm{font-size:15px;white-space:normal;line-height:1.2}
+  .brand .sub{display:none}
 }
 
 /* ---------- mobile menu ---------- */
@@ -252,12 +227,12 @@ nav.main > ul > li{position:relative}
 }
 .mnav[data-open="true"]{display:block}
 .mnav-top{display:flex;align-items:center;height:72px;border-bottom:1px solid var(--hair);padding:0 var(--gut)}
-.mnav-close{margin-left:auto;background:none;border:1px solid var(--hair);font-size:20px;line-height:1;padding:8px 13px;cursor:pointer;color:var(--navy)}
+.mnav-close{margin-left:auto;background:none;border:1px solid var(--hair);border-radius:var(--radius);font-size:20px;line-height:1;padding:8px 13px;cursor:pointer;color:var(--navy)}
 .macc{border-bottom:1px solid var(--hair-2)}
-.macc > button{
+.macc > button,.macc > a{
   width:100%;display:flex;justify-content:space-between;align-items:center;
-  background:none;border:0;font:inherit;font-size:16px;font-weight:600;color:var(--navy);
-  padding:17px var(--gut);text-align:left;cursor:pointer;
+  background:none;border:0;font:inherit;font-size:16px;font-weight:700;color:var(--navy);
+  padding:17px var(--gut);text-align:left;cursor:pointer;text-decoration:none;
 }
 .macc > button .pm{color:var(--gold-t);font-size:19px;line-height:1}
 .macc-body{display:none;padding:0 var(--gut) 16px}
@@ -271,78 +246,51 @@ nav.main > ul > li{position:relative}
 }
 .mnav-foot a.alt{background:#fff;color:var(--navy);border:1px solid var(--navy)}
 
-/* ================= HERO ================= */
+/* ================= HERO =================
+   Full-bleed photo treatment: the image (or its navy/gold gradient fallback
+   if /images/hero-kampala.jpg is absent) fills the section; a scrim gradient
+   sits over it so the overlaid text stays legible either way. */
 .hero{
-  border-bottom:1px solid var(--hair);
-  background:
-    linear-gradient(180deg,#fff 0%,var(--paper-2) 100%);
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;color:#fff;
+  min-height:clamp(520px,72vh,760px);
+  display:flex;align-items:center;
 }
-.hero::before{
-  content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
-  background:linear-gradient(180deg,var(--navy),var(--gold));
+.hero-media{
+  margin:0;position:absolute;inset:0;z-index:0;
+  background:linear-gradient(155deg,var(--navy) 0%,var(--navy-l) 55%,var(--navy-d) 100%);
 }
-.hero-in{display:grid;grid-template-columns:1.15fr .85fr;gap:70px;padding:78px 0 68px}
+.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,rgba(10,24,38,.90) 0%,rgba(10,24,38,.72) 40%,rgba(10,24,38,.32) 72%,rgba(10,24,38,.12) 100%);
+}
+.hero-in{position:relative;z-index:1;max-width:700px;padding:110px 0}
 .hero h1{
-  font-size:clamp(34px,4.4vw,54px);color:var(--navy);line-height:1.08;
+  font-size:clamp(38px,5.2vw,64px);color:#fff;line-height:1.04;
   letter-spacing:-.022em;margin-bottom:26px;
 }
-.hero h1 .gold{color:var(--gold-t)}
-.hero-lede{font-size:18.5px;line-height:1.62;color:var(--grey);max-width:52ch;margin-bottom:34px}
+.hero h1 .gold{color:var(--gold-l)}
+.hero-lede{font-size:18.5px;line-height:1.62;color:#DDE4EC;max-width:52ch;margin-bottom:34px}
 .hero-acts{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:38px}
 .btn{
   display:inline-flex;align-items:center;gap:10px;text-decoration:none;
-  font:inherit;padding:15px 26px;font-size:14px;font-weight:600;letter-spacing:.03em;
-  border:1px solid var(--navy);transition:.18s;cursor:pointer;
+  font:inherit;padding:15px 26px;font-size:14px;font-weight:700;letter-spacing:.03em;
+  border:1px solid var(--navy);border-radius:var(--radius);transition:.18s;cursor:pointer;
 }
 .btn-p{background:var(--navy);color:#fff}
 .btn-p:hover{background:var(--navy-l);border-color:var(--navy-l)}
 .btn-s{background:transparent;color:var(--navy)}
 .btn-s:hover{background:var(--navy);color:#fff}
-.hero-note{font-size:13.5px;color:var(--grey-l);border-left:2px solid var(--gold);padding-left:14px;max-width:44ch}
+.hero .btn-p{background:var(--gold-l);border-color:var(--gold-l);color:var(--navy-d)}
+.hero .btn-p:hover{background:#fff;border-color:#fff}
+.hero .btn-s{color:#fff;border-color:rgba(255,255,255,.6)}
+.hero .btn-s:hover{background:#fff;color:var(--navy)}
+.hero-note{font-size:13.5px;color:#B9C4D0;border-left:2px solid var(--gold-l);padding-left:14px;max-width:46ch}
+.hero-note a{color:#fff;text-decoration-color:var(--gold-l)}
 
-/* routing card */
-.route{background:#fff;border:1px solid var(--hair);border-top:3px solid var(--navy);padding:30px 28px}
-.route h2{font-family:var(--sans);font-size:10.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--gold-t);margin-bottom:20px}
-.route ul li{border-bottom:1px solid var(--hair-2)}
-.route ul li:last-child{border-bottom:0}
-.route ul a{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;
-  padding:13px 0;text-decoration:none;color:var(--navy);
-  font-family:var(--serif);font-size:17px;font-weight:600;
-}
-.route ul a small{font-family:var(--sans);font-size:12px;font-weight:400;color:var(--grey-l);display:block;margin-top:2px}
-.route ul a .ar{color:var(--gold);font-size:16px;transition:transform .18s}
-.route ul a:hover{color:var(--gold-t)}
-.route ul a:hover .ar{transform:translateX(5px)}
-
-/* hero visual — right-hand column pairs an image placeholder (falls back to a
-   drawn architectural treatment if /images/hero-kampala.jpg is absent) with
-   the routing card beneath it */
-.hero-side{display:flex;flex-direction:column;gap:22px}
-.hero-visual{
-  margin:0;position:relative;aspect-ratio:5/4;overflow:hidden;border:1px solid var(--hair);
-  background:linear-gradient(155deg,var(--navy) 0%,var(--navy-l) 55%,var(--navy-d) 100%);
-}
-.hero-visual::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gold);z-index:2}
-.hero-visual .hv-grid{
-  position:absolute;inset:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(214,187,120,.16) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(214,187,120,.16) 1px,transparent 1px);
-  background-size:100% 25%,20% 100%;
-}
-.hero-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-.hero-visual .hv-cap{
-  position:absolute;left:20px;bottom:16px;z-index:2;color:#fff;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
-  text-shadow:0 2px 10px rgba(0,0,0,.55);
-}
-.hero-visual .hv-cap span{display:block;font-size:10px;font-weight:400;letter-spacing:.08em;color:var(--gold-l);margin-top:3px;text-transform:none}
-
-@media(max-width:960px){
-  .hero-in{grid-template-columns:1fr;gap:44px;padding:56px 0 52px}
-  .hero-visual{aspect-ratio:16/9}
+@media(max-width:640px){
+  .hero{min-height:clamp(480px,86vh,680px)}
+  .hero-in{padding:88px 0}
 }
 
 /* ================= PROOF BAND ================= */
@@ -352,7 +300,7 @@ nav.main > ul > li{position:relative}
 .pf{padding:0 26px;border-left:1px solid rgba(255,255,255,.16)}
 .pf:first-child{padding-left:0;border-left:0}
 .cnt{font-style:normal;font-variant-numeric:tabular-nums}
-.pf .n{font-family:var(--serif);font-size:42px;font-weight:600;color:#fff;line-height:1;margin-bottom:10px;letter-spacing:-.02em}
+.pf .n{font-family:var(--display);font-size:42px;font-weight:800;color:#fff;line-height:1;margin-bottom:10px;letter-spacing:-.02em}
 .pf .n span{color:var(--gold-l);font-size:26px}
 .pf .l{font-size:12.5px;color:#A9B7C6;line-height:1.45}
 @media(max-width:900px){
@@ -370,26 +318,30 @@ nav.main > ul > li{position:relative}
 }
 .matter::before{content:"";position:absolute;left:0;top:0;width:44px;height:3px;background:var(--gold)}
 .matter .tag{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-t);margin-bottom:16px}
-.matter .fig{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--navy);line-height:1.1;margin-bottom:12px;letter-spacing:-.02em}
+.matter .fig{font-family:var(--display);font-size:30px;font-weight:800;color:var(--navy);line-height:1.1;margin-bottom:12px;letter-spacing:-.02em}
 .matter p{font-size:14.5px;color:var(--grey);line-height:1.6;margin-bottom:20px}
 .matter .meta{margin-top:auto;padding-top:16px;border-top:1px solid var(--hair-2);font-size:12.5px;color:var(--grey-l);display:flex;justify-content:space-between;gap:10px}
 @media(max-width:900px){.matters{grid-template-columns:1fr;gap:20px}}
 
-/* ================= PARTNERS ================= */
+/* ================= PARTNERS =================
+   Photo-forward cards: a large face-first tile spans the full card width,
+   with the text content in a padded block beneath it — rather than a small
+   thumbnail sitting beside the text. */
 .partners{display:grid;grid-template-columns:repeat(2,1fr);gap:30px}
-.partner{display:grid;grid-template-columns:132px 1fr;gap:26px;background:#fff;border:1px solid var(--hair);padding:28px}
+.partner{background:#fff;border:1px solid var(--hair);overflow:hidden}
 .pphoto{
-  aspect-ratio:3/4;background:linear-gradient(155deg,var(--navy) 0%,var(--navy-l) 100%);
-  display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px;position:relative;
+  aspect-ratio:4/5;background:linear-gradient(155deg,var(--navy) 0%,var(--navy-l) 100%);
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:20px;position:relative;
   overflow:hidden;
 }
-.pphoto span{font-family:var(--serif);font-size:30px;color:rgba(255,255,255,.34);font-weight:600;letter-spacing:.04em}
-.pphoto::after{content:"";position:absolute;left:14px;right:14px;bottom:8px;height:2px;background:var(--gold);z-index:2}
+.pphoto span{font-family:var(--display);font-size:54px;color:rgba(255,255,255,.32);font-weight:800;letter-spacing:.03em}
+.pphoto::after{content:"";position:absolute;left:22px;right:22px;bottom:10px;height:3px;background:var(--gold);z-index:2}
 /* photograph sits above the initials placeholder; if the file at /images/people/…
    is missing, the inline onerror handler removes the <img>, revealing the
    monogram-on-navy fallback beneath it */
 .pphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-.partner h3{font-size:21px;color:var(--navy);margin-bottom:5px}
+.pbody{padding:24px 26px 28px}
+.partner h3{font-size:22px;color:var(--navy);margin-bottom:5px}
 .partner .role{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-t);margin-bottom:14px}
 .partner .quals{font-size:12.5px;color:var(--grey-l);line-height:1.5;margin-bottom:14px}
 .partner .focus{font-size:14px;color:var(--grey);line-height:1.6;margin-bottom:18px}
@@ -401,8 +353,7 @@ nav.main > ul > li{position:relative}
 }
 .partner .contact a:hover,.partner .contact button:hover{color:var(--gold-t)}
 .partner .contact .ic{color:var(--gold);font-size:12px;width:14px}
-@media(max-width:900px){.partners{grid-template-columns:1fr;gap:20px}}
-@media(max-width:420px){.partner{grid-template-columns:1fr}.pphoto{aspect-ratio:16/9}}
+@media(max-width:900px){.partners{grid-template-columns:1fr;gap:20px}.pphoto{aspect-ratio:16/10}}
 
 /* ================= INSIGHTS ================= */
 .ins-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:40px;flex-wrap:wrap}
@@ -429,7 +380,7 @@ nav.main > ul > li{position:relative}
 .sector{background:#fff;padding:24px 22px;text-decoration:none;display:block;transition:background .16s}
 .sector:hover{background:var(--paper-2)}
 .sector .num{font-size:11px;color:var(--gold-t);font-weight:700;letter-spacing:.1em;margin-bottom:10px}
-.sector .nm{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--navy);line-height:1.25}
+.sector .nm{font-family:var(--display);font-size:17px;font-weight:700;color:var(--navy);line-height:1.25}
 .sector:hover .nm{color:var(--gold-t)}
 .sector .dsc{
   font-family:var(--sans);font-size:12.5px;color:var(--grey-l);line-height:1.45;
@@ -445,13 +396,14 @@ nav.main > ul > li{position:relative}
 .approach-side{position:relative}
 .approach-side p{color:var(--grey);font-size:16px;line-height:1.68;margin-top:16px;max-width:38ch}
 .appr-list{border-top:1px solid var(--hair)}
-.appr-row{display:grid;grid-template-columns:64px 1fr;gap:22px;padding:26px 0;border-bottom:1px solid var(--hair)}
-.appr-row .no{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--gold-t);line-height:1.3}
+.appr-row{display:grid;grid-template-columns:76px 1fr;gap:22px;padding:26px 0;border-bottom:1px solid var(--hair)}
+.appr-row .no{font-family:var(--display);font-size:44px;font-weight:800;color:var(--gold-t);line-height:1}
 .appr-row h3{font-size:18.5px;color:var(--navy);margin-bottom:8px}
 .appr-row p{font-size:14.5px;color:var(--grey);line-height:1.65;max-width:62ch}
 @media(max-width:900px){
   .approach-in{grid-template-columns:1fr;gap:30px}
-  .appr-row{grid-template-columns:44px 1fr;gap:16px;padding:22px 0}
+  .appr-row{grid-template-columns:56px 1fr;gap:16px;padding:22px 0}
+  .appr-row .no{font-size:34px}
 }
 
 /* ================= PRACTICE AREAS (homepage) ================= */
@@ -496,7 +448,7 @@ nav.main > ul > li{position:relative}
 .cblock .v a:hover{color:var(--gold-t)}
 .map-card{display:flex;flex-direction:column;gap:16px}
 .map-embed{
-  position:relative;border:1px solid var(--hair);overflow:hidden;
+  position:relative;border:1px solid var(--hair);border-radius:var(--radius);overflow:hidden;
   aspect-ratio:4/3;min-height:260px;background:var(--paper-2);
 }
 .map-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -515,7 +467,7 @@ nav.main > ul > li{position:relative}
 }
 .gcover::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--gold)}
 .gcover .k{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);font-weight:700;margin-bottom:auto}
-.gcover .t{font-family:var(--serif);font-size:27px;line-height:1.15;font-weight:600;margin-bottom:14px}
+.gcover .t{font-family:var(--display);font-size:27px;line-height:1.15;font-weight:600;margin-bottom:14px}
 .gcover .y{font-size:12px;color:#93A3B4;border-top:1px solid rgba(255,255,255,.2);padding-top:12px}
 .guide h2{font-size:32px;color:#fff;margin-bottom:16px}
 .guide > .wrap > div > p{color:#AEBBC9;font-size:16.5px;line-height:1.65;margin-bottom:22px;max-width:56ch}
@@ -525,13 +477,13 @@ nav.main > ul > li{position:relative}
 .gform{display:flex;gap:10px;flex-wrap:wrap;max-width:520px}
 .gform input{
   flex:1 1 240px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.28);
-  color:#fff;font:inherit;font-size:15px;padding:14px 16px;
+  border-radius:var(--radius);color:#fff;font:inherit;font-size:15px;padding:14px 16px;
 }
 .gform input::placeholder{color:#A2B0BF}
 .gform input:focus{background:rgba(255,255,255,.13);border-color:var(--gold-l);outline:none}
 .gform button{
-  background:var(--gold-l);color:var(--navy-d);border:1px solid var(--gold-l);
-  font:inherit;font-size:14px;font-weight:600;padding:14px 26px;cursor:pointer;letter-spacing:.03em;
+  background:var(--gold-l);color:var(--navy-d);border:1px solid var(--gold-l);border-radius:var(--radius);
+  font:inherit;font-size:14px;font-weight:700;padding:14px 26px;cursor:pointer;letter-spacing:.03em;
 }
 .gform button:hover{background:#fff;border-color:#fff}
 .gnote{font-size:12.5px;color:#8C9BAB;margin-top:14px}
@@ -544,7 +496,7 @@ nav.main > ul > li{position:relative}
 .enq-side h2{font-size:32px;color:var(--navy);margin-bottom:16px}
 .enq-side p{color:var(--grey);font-size:16px;line-height:1.65;margin-bottom:24px}
 .pledge{border-left:2px solid var(--gold);padding:2px 0 2px 16px;margin-bottom:24px}
-.pledge b{display:block;font-family:var(--serif);font-size:18px;color:var(--navy);margin-bottom:4px}
+.pledge b{display:block;font-family:var(--display);font-size:18px;color:var(--navy);margin-bottom:4px}
 .pledge span{font-size:14px;color:var(--grey)}
 .enq-alt{font-size:14.5px;color:var(--grey);border-top:1px solid var(--hair);padding-top:20px}
 .enq-alt a,.enq-alt button{
@@ -558,7 +510,7 @@ form.enq{background:var(--paper-2);border:1px solid var(--hair);border-top:3px s
 .fld label .req,.mtype legend .req{color:var(--gold-t)}
 .fld input,.fld select,.fld textarea{
   width:100%;font:inherit;font-size:15px;padding:13px 14px;
-  border:1px solid var(--hair);background:#fff;color:var(--ink);border-radius:0;
+  border:1px solid var(--hair);background:#fff;color:var(--ink);border-radius:var(--radius);
 }
 .fld textarea{min-height:118px;resize:vertical}
 .fld select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2310263F' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
@@ -566,8 +518,8 @@ form.enq{background:var(--paper-2);border:1px solid var(--hair);border-top:3px s
 .fhint{font-size:12.5px;color:var(--grey-l);margin-top:6px}
 .fsubmit{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:22px;padding-top:22px;border-top:1px solid var(--hair)}
 .fsubmit button{
-  background:var(--navy);color:#fff;border:1px solid var(--navy);font:inherit;
-  font-size:14px;font-weight:600;letter-spacing:.03em;padding:15px 30px;cursor:pointer;
+  background:var(--navy);color:#fff;border:1px solid var(--navy);border-radius:var(--radius);font:inherit;
+  font-size:14px;font-weight:700;letter-spacing:.03em;padding:15px 30px;cursor:pointer;
 }
 .fsubmit button:hover{background:var(--navy-l)}
 .fsubmit .priv{font-size:12.5px;color:var(--grey-l);max-width:34ch}
@@ -589,7 +541,7 @@ form.enq{background:var(--paper-2);border:1px solid var(--hair);border-top:3px s
   border-top:3px solid var(--gold);padding:40px 36px 36px;
 }
 .bkov-close{
-  position:absolute;top:16px;right:16px;background:none;border:1px solid var(--hair);
+  position:absolute;top:16px;right:16px;background:none;border:1px solid var(--hair);border-radius:var(--radius);
   color:var(--navy);font-size:17px;line-height:1;padding:8px 12px;cursor:pointer;
 }
 .bkov-lede{color:var(--grey);font-size:15px;line-height:1.62;margin:14px 0 26px;max-width:52ch}
@@ -608,7 +560,7 @@ form.enq{background:var(--paper-2);border:1px solid var(--hair);border-top:3px s
 .mtype .opts{display:flex;flex-wrap:wrap;gap:10px}
 .mtype label{
   display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);
-  border:1px solid var(--hair);padding:10px 14px;cursor:pointer;
+  border:1px solid var(--hair);border-radius:var(--radius);padding:10px 14px;cursor:pointer;
   transition:border-color .15s ease,background .15s ease;
 }
 .mtype label:has(input:checked){border-color:var(--navy);background:var(--paper-2)}
@@ -621,7 +573,7 @@ form.enq{background:var(--paper-2);border:1px solid var(--hair);border-top:3px s
 .sov label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l);font-weight:700;margin-bottom:16px}
 .sov input{
   width:100%;background:transparent;border:0;border-bottom:2px solid rgba(255,255,255,.4);
-  color:#fff;font-family:var(--serif);font-size:34px;padding:10px 0;outline:none;
+  color:#fff;font-family:var(--display);font-size:34px;padding:10px 0;outline:none;
 }
 .sov input::placeholder{color:rgba(255,255,255,.55)}
 .sov input:focus{border-bottom-color:var(--gold-l)}
@@ -635,7 +587,7 @@ form.enq{background:var(--paper-2);border:1px solid var(--hair);border-top:3px s
 /* ================= FOOTER ================= */
 footer.site{background:var(--navy);color:#fff;padding:64px 0 0}
 .f-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.14)}
-.f-brand .wm{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.02em;margin-bottom:6px}
+.f-brand .wm{font-family:var(--display);font-size:20px;font-weight:700;letter-spacing:.02em;margin-bottom:6px}
 .f-brand .wm em{font-style:normal;color:var(--gold-l);font-weight:400}
 .f-brand .sub{font-size:9.5px;letter-spacing:.3em;color:var(--gold-l);font-weight:700;margin-bottom:20px}
 .f-brand p{font-size:13.5px;color:#A3B1C0;line-height:1.65;max-width:34ch}
@@ -685,131 +637,12 @@ body.proto-off{padding-bottom:0}
       </span>
     </a>
 
-    <nav class="main" aria-label="Main">
-      <ul>
-        <li>
-          <button class="nav-a" aria-expanded="false" data-mega="m1">Practice Areas <span class="caret">▾</span></button>
-          <div class="mega w3" id="m1">
-            <div class="mega-grid">
-              <div>
-                <h3>Dispute Resolution</h3>
-                <ul>
-                  <li><a href="#">Commercial Litigation</a></li>
-                  <li><a href="#">Arbitration &amp; ADR</a></li>
-                  <li><a href="#">Banking &amp; Finance Litigation</a></li>
-                  <li><a href="#">Constitutional &amp; Administrative</a></li>
-                  <li><a href="#">Insurance Disputes</a></li>
-                  <li><a href="#">Employment Disputes</a></li>
-                  <li><a href="#">Land &amp; Property Disputes</a></li>
-                  <li><a href="#">Tax Disputes &amp; URA Appeals</a></li>
-                  <li><a href="#">Debt Recovery &amp; Enforcement</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>Corporate &amp; Commercial</h3>
-                <ul>
-                  <li><a href="#">Mergers &amp; Acquisitions</a></li>
-                  <li><a href="#">Corporate Advisory &amp; Governance</a></li>
-                  <li><a href="#">Banking &amp; Finance</a></li>
-                  <li><a href="#">Project Finance &amp; PPP</a></li>
-                  <li><a href="#">Capital Markets</a></li>
-                  <li><a href="#">Competition &amp; Merger Control</a></li>
-                  <li><a href="#">Insolvency &amp; Restructuring</a></li>
-                  <li><a href="#">Privatisation &amp; Divestiture</a></li>
-                  <li><a href="#">Legal Audits &amp; Due Diligence</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>Regulatory &amp; Specialist</h3>
-                <ul>
-                  <li><a href="#">Taxation</a></li>
-                  <li><a href="#">Intellectual Property &amp; Trade Marks</a></li>
-                  <li><a href="#">Employment &amp; Labour</a></li>
-                  <li><a href="#">Data Protection &amp; Privacy</a></li>
-                  <li><a href="#">Aviation</a></li>
-                  <li><a href="#">Telecommunications &amp; Technology</a></li>
-                  <li><a href="#">Energy, Oil, Gas &amp; Mining</a></li>
-                  <li><a href="#">Construction &amp; Infrastructure</a></li>
-                  <li><a href="#">Real Estate &amp; Conveyancing</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <button class="nav-a" aria-expanded="false" data-mega="m2">Industries <span class="caret">▾</span></button>
-          <div class="mega w3" id="m2">
-            <div class="mega-grid">
-              <div>
-                <h3>Financial &amp; Professional</h3>
-                <ul>
-                  <li><a href="#">Financial Services</a></li>
-                  <li><a href="#">Insurance</a></li>
-                  <li><a href="#">Public Sector &amp; State Enterprises</a></li>
-                  <li><a href="#">Development, NGOs &amp; Donor-Funded</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>Industrial &amp; Resource</h3>
-                <ul>
-                  <li><a href="#">Energy &amp; Extractives</a></li>
-                  <li><a href="#">Infrastructure &amp; Construction</a></li>
-                  <li><a href="#">Manufacturing &amp; Industrial</a></li>
-                  <li><a href="#">Agriculture &amp; Agribusiness</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>Consumer &amp; Technology</h3>
-                <ul>
-                  <li><a href="#">Telecommunications, Media &amp; Technology</a></li>
-                  <li><a href="#">Aviation &amp; Transport</a></li>
-                  <li><a href="#">Real Estate &amp; Hospitality</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <button class="nav-a" aria-expanded="false" data-mega="m3">How We Help <span class="caret">▾</span></button>
-          <div class="mega w3" id="m3">
-            <div class="mega-grid">
-              <div>
-                <h3>Entering Uganda</h3>
-                <ul>
-                  <li><a href="#guide">Doing Business in Uganda</a></li>
-                  <li><a href="#">Setting Up a Company</a></li>
-                  <li><a href="#">Foreign Investment &amp; Entry</a></li>
-                  <li><a href="#">Employing People in Uganda</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>Growing &amp; Transacting</h3>
-                <ul>
-                  <li><a href="#">Raising Capital</a></li>
-                  <li><a href="#">Buying or Selling a Business</a></li>
-                  <li><a href="#">Buying Land or Property</a></li>
-                  <li><a href="#">Protecting a Brand or Invention</a></li>
-                  <li><a href="#">Startups &amp; Growth Companies</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>When Things Go Wrong</h3>
-                <ul>
-                  <li><a href="#">Facing a Commercial Dispute</a></li>
-                  <li><a href="#">Enforcing Security &amp; Recovering Debt</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li><a class="nav-a" href="#partners">Our People</a></li>
-        <li><a class="nav-a" href="#insights">Insights</a></li>
-        <li><a class="nav-a" href="#approach">Firm</a></li>
-        <li><a class="nav-a" href="#careers">Careers</a></li>
-        <li><a class="nav-a" href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-
+    <!-- The full nav — Practice Areas, Industries, How We Help, and the rest —
+         lives entirely in the #mnav panel below and opens from the hamburger
+         at every breakpoint. There is no separate desktop dropdown nav: the
+         header is deliberately minimal (brand, search, primary CTA, menu),
+         matching a bolder, less chrome-heavy register than the previous
+         mega-menu header. -->
     <button class="hdr-search" aria-label="Search this site">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
     </button>
@@ -858,11 +691,12 @@ body.proto-off{padding-bottom:0}
     </div>
   </div>
 
-  <div class="macc"><button onclick="location.hash='#partners'">Our People</button></div>
-  <div class="macc"><button onclick="location.hash='#insights'">Insights</button></div>
-  <div class="macc"><button onclick="location.hash='#approach'">Firm</button></div>
-  <div class="macc"><button onclick="location.hash='#careers'">Careers</button></div>
-  <div class="macc"><button onclick="location.hash='#contact'">Contact</button></div>
+  <div class="macc"><a href="#main">Home</a></div>
+  <div class="macc"><a href="#partners">Our People</a></div>
+  <div class="macc"><a href="#insights">Insights</a></div>
+  <div class="macc"><a href="#approach">Firm</a></div>
+  <div class="macc"><a href="#careers">Careers</a></div>
+  <div class="macc"><a href="#contact">Contact</a></div>
 
   <div class="mnav-foot">
     <button type="button" data-book-open>Book a Consultation</button>
@@ -874,48 +708,32 @@ body.proto-off{padding-bottom:0}
 
 <!-- ===================== HERO ===================== -->
 <section class="hero">
+  <!-- Full-bleed image placeholder: replace src with a real photograph (e.g.
+       Kampala skyline, chambers exterior, or an architectural detail). Until
+       then the onerror handler removes the broken <img>, leaving the drawn
+       navy/gold gradient (plus scrim) as an intentional fallback, not a
+       broken box. The quick-links card that used to sit here was folded into
+       the full nav panel (☰) — Practice Areas, Industries, How We Help and
+       Our People are all one tap away there now. -->
+  <figure class="hero-media" aria-hidden="true">
+    <img src="/images/hero-kampala.jpg" alt="" loading="eager" onerror="this.remove()">
+  </figure>
   <div class="wrap hero-in">
-    <div>
-      <p class="eyebrow">Kampala · Established Commercial Practice</p>
-      <h1>Commercial counsel with the <span class="gold">advocacy</span> to defend it.</h1>
-      <p class="hero-lede">
-        We advise banks, corporates, insurers, State agencies and international investors on the
-        transactions that build businesses in Uganda — and we appear for them, in court and in
-        arbitration, when those transactions are challenged.
-      </p>
-      <div class="hero-acts">
-        <button class="btn btn-p" type="button" data-book-open>Book a Consultation <span aria-hidden="true">→</span></button>
-        <a class="btn btn-s" href="#matters">See our work</a>
-      </div>
-      <p class="hero-note">
-        Both named partners are personally accountable on every mandate, and directly reachable —
-        call <a href="tel:+256414230478" style="color:inherit">+256 414 230 478</a>.
-      </p>
+    <p class="eyebrow on-dark">Kampala · Established Commercial Practice</p>
+    <h1>Commercial counsel with the <span class="gold">advocacy</span> to defend it.</h1>
+    <p class="hero-lede">
+      We advise banks, corporates, insurers, State agencies and international investors on the
+      transactions that build businesses in Uganda — and we appear for them, in court and in
+      arbitration, when those transactions are challenged.
+    </p>
+    <div class="hero-acts">
+      <button class="btn btn-p" type="button" data-book-open>Book a Consultation <span aria-hidden="true">→</span></button>
+      <a class="btn btn-s" href="#matters">See our work</a>
     </div>
-
-    <div class="hero-side">
-      <!-- Image placeholder: replace src with a real photograph (e.g. Kampala
-           skyline, chambers exterior, or an architectural detail). Until then
-           the onerror handler removes the broken <img>, leaving the drawn
-           navy/gold treatment as an intentional fallback, not a broken box. -->
-      <figure class="hero-visual">
-        <img src="/images/hero-kampala.jpg" alt="" loading="eager"
-             onerror="this.remove()">
-        <div class="hv-grid" aria-hidden="true"></div>
-        <figcaption class="hv-cap">Kampala, Uganda <span>Kololo · Nakasero · Central Business District</span></figcaption>
-      </figure>
-
-      <div class="route">
-        <h2>Where would you like to start?</h2>
-        <ul>
-          <li><a href="#practice">Practice Areas <small>Three groups of expertise</small> <span class="ar" aria-hidden="true">→</span></a></li>
-          <li><a href="#industries">Industries <small>11 sectors we work in</small> <span class="ar" aria-hidden="true">→</span></a></li>
-          <li><a href="#">How We Help <small>Start from your situation</small> <span class="ar" aria-hidden="true">→</span></a></li>
-          <li><a href="#partners">Our People <small><!-- PLACEHOLDER: [VERIFY: NUMBER OF ADVOCATES] -->14 advocates</small> <span class="ar" aria-hidden="true">→</span></a></li>
-          <li><a href="#guide">Doing Business in Uganda <small>Free guide for investors</small> <span class="ar" aria-hidden="true">→</span></a></li>
-        </ul>
-      </div>
-    </div>
+    <p class="hero-note">
+      Both named partners are personally accountable on every mandate, and directly reachable —
+      call <a href="tel:+256414230478">+256 414 230 478</a>.
+    </p>
   </div>
 </section>
 
@@ -1140,7 +958,7 @@ body.proto-off{padding-bottom:0}
           <img src="/images/people/enos-tumusiime.jpg" alt="Portrait of Enos K. Tumusiime" loading="lazy" onerror="this.remove()">
           <span aria-hidden="true">EKT</span>
         </div>
-        <div>
+        <div class="pbody">
           <h3>Enos K. Tumusiime</h3>
           <div class="role">Partner · Advocate</div>
           <!-- PLACEHOLDER: [VERIFY: QUALIFICATIONS] -->
@@ -1160,7 +978,7 @@ body.proto-off{padding-bottom:0}
           <img src="/images/people/macdosman-kabega.jpg" alt="Portrait of Macdosman W. Kabega" loading="lazy" onerror="this.remove()">
           <span aria-hidden="true">MWK</span>
         </div>
-        <div>
+        <div class="pbody">
           <h3>Macdosman W. Kabega</h3>
           <div class="role">Partner · Advocate</div>
           <!-- PLACEHOLDER: [VERIFY: QUALIFICATIONS] -->
@@ -1189,7 +1007,7 @@ body.proto-off{padding-bottom:0}
     <div class="ins-head">
       <div>
         <p class="eyebrow">Insights</p>
-        <h2 style="font-family:var(--serif);font-size:34px;color:var(--navy)">Recent thinking.</h2>
+        <h2 style="font-family:var(--display);font-size:34px;color:var(--navy)">Recent thinking.</h2>
       </div>
       <a class="link-more" href="#">All insights <span class="ar" aria-hidden="true">→</span></a>
     </div>
@@ -1807,32 +1625,7 @@ body.proto-off{padding-bottom:0}
 
 <script>
 (function(){
-  /* ---- desktop mega menus ---- */
-  var triggers = document.querySelectorAll('.nav-a[data-mega]');
-  function closeAll(except){
-    triggers.forEach(function(t){
-      var m = document.getElementById(t.dataset.mega);
-      if(m !== except){ m.removeAttribute('data-open'); t.setAttribute('aria-expanded','false'); }
-    });
-  }
-  triggers.forEach(function(t){
-    var mega = document.getElementById(t.dataset.mega);
-    t.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = mega.getAttribute('data-open') === 'true';
-      closeAll();
-      if(!open){ mega.setAttribute('data-open','true'); t.setAttribute('aria-expanded','true'); }
-    });
-    t.parentElement.addEventListener('mouseleave', function(){
-      mega.removeAttribute('data-open'); t.setAttribute('aria-expanded','false');
-    });
-  });
-  document.addEventListener('click', function(){ closeAll(); });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){ closeAll(); closeMobile(); }
-  });
-
-  /* ---- mobile menu ---- */
+  /* ---- mobile menu (now the site's only nav panel, at every breakpoint) ---- */
   var burger = document.getElementById('burger');
   var mnav   = document.getElementById('mnav');
   function openMobile(){ mnav.setAttribute('data-open','true'); burger.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
@@ -1840,6 +1633,9 @@ body.proto-off{padding-bottom:0}
   burger.addEventListener('click', openMobile);
   document.getElementById('mnav-close').addEventListener('click', closeMobile);
   mnav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMobile); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMobile();
+  });
 
   /* ---- mobile accordions ---- */
   document.querySelectorAll('.macc > button').forEach(function(b){
@@ -2055,9 +1851,7 @@ body.proto-off{padding-bottom:0}
 
   /* selector, per-item stagger in ms, base delay in ms */
   var GROUPS = [
-    ['.hero-in > div:first-child > *',        70,   0],
-    ['.hero-visual',                           0, 120],
-    ['.route',                                 0, 260],
+    ['.hero-in > *',                          70,   0],
     ['.pf',                                   90,   0],
     ['#matters .ins-head',                     0,   0],
     ['.matter',                              100,  60],
