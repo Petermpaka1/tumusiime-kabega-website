@@ -6,4 +6,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.tumusiimekabega.com/sitemap.xml
+Sitemap: https://www.tumusiimekabega.co.ug/sitemap.xml
