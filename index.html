@@ -1295,7 +1295,8 @@ body.proto-off{padding-bottom:0}
       </div>
     </div>
 
-    <form class="enq" id="enq-form" novalidate>
+    <form class="enq" id="enq-form" action="https://formspree.io/f/xppaborl" method="POST" novalidate>
+      <input type="hidden" name="_subject" value="New enquiry — Tumusiime, Kabega &amp; Co. website">
       <div class="frow">
         <div class="fld">
           <label for="f-name">Your name <span class="req" aria-hidden="true">*</span></label>
@@ -1557,7 +1558,8 @@ body.proto-off{padding-bottom:0}
       booking — a lawyer will call or email to agree a firm time within one working day.
     </p>
 
-    <form id="bk-form" novalidate>
+    <form id="bk-form" action="https://formspree.io/f/xppaborl" method="POST" novalidate>
+      <input type="hidden" name="_subject" value="New consultation booking request — Tumusiime, Kabega &amp; Co. website">
       <div class="frow">
         <div class="fld">
           <label for="bk-name">Your name <span class="req" aria-hidden="true">*</span></label>
@@ -1929,17 +1931,23 @@ body.proto-off{padding-bottom:0}
 
   /* =====================================================================
      PROTOTYPE VS PRODUCTION — outstanding backend work
-     Nothing below sends data anywhere. Before launch this site needs:
-       - An email/API service to receive enquiry-form, booking-request and
-         guide-download submissions (e.g. a serverless function or CMS form
-         endpoint), with server-side validation mirroring the client-side
-         checks here.
+     The enquiry form (#enq-form) and booking modal (#bk-form) are LIVE —
+     both POST to a Formspree endpoint (https://formspree.io/f/xppaborl)
+     that relays submissions by email. That endpoint's destination address
+     is a setting inside the Formspree dashboard, not in this code — it was
+     first set to a personal address for testing and should be switched to
+     the firm's real monitored inbox before this is shown to real clients.
+     Still outstanding before launch:
+       - Confirm the Formspree destination email is the firm's real,
+         monitored inbox (see above) — currently a placeholder for testing.
        - A real scheduling/calendar API behind the booking modal (#bkov),
          to offer genuinely open slots instead of a fixed list of time
          bands, hold a slot on request, and send calendar invites once a
-         partner confirms — see the TODO beside the bk-form handler.
+         partner confirms — see the TODO beside the bk-form handler. Right
+         now a booking request is just an emailed request, not a hold.
        - A PDF delivery mechanism for the "Doing Business in Uganda" guide
-         (signed download link or emailed attachment) once the document exists.
+         (signed download link or emailed attachment) once the document
+         exists — the guide-download form below is still a prototype stub.
        - A CMS or flat-file source for Insights articles, replacing the
          static markup below, plus dedicated article/bio/practice-area pages.
        - Search indexing to back the search overlay (currently Phase 3 stub).
@@ -1976,22 +1984,36 @@ body.proto-off{padding-bottom:0}
         return;
       }
     }
-    /* PROTOTYPE ONLY — no request is sent anywhere. The brief delay and
-       disabled state stand in for a future fetch() to the firm's intake
-       API/CMS (TODO, Phase 2 backend). Nothing here should be mistaken for
-       a real submission: no email is sent and no lawyer is notified. */
+    /* LIVE — posts to Formspree (see the form's action attribute), which
+       relays the submission by email to whatever address that Formspree
+       form is currently configured to deliver to. No calendar, CRM or
+       intake system is wired up beyond that single relayed email. */
     var area = document.getElementById('f-area').value;
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
     msg.removeAttribute('data-show');
-    setTimeout(function(){
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response){
       submitBtn.disabled = false;
       submitBtn.textContent = 'Send enquiry';
-      msg.textContent = 'Thank you. In the live site this enquiry would be routed to the lawyer leading ' +
-        area + ', with a reply within one working day.';
+      if(response.ok){
+        msg.textContent = 'Thank you. Your enquiry concerning ' + area +
+          ' has been sent — a lawyer will reply within one working day.';
+        msg.setAttribute('data-show','true');
+        form.reset();
+      } else {
+        msg.textContent = 'Sorry, something went wrong sending this. Please try again, or call us on +256 414 230 478.';
+        msg.setAttribute('data-show','true');
+      }
+    }).catch(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send enquiry';
+      msg.textContent = 'Sorry, something went wrong sending this. Please check your connection and try again, or call us on +256 414 230 478.';
       msg.setAttribute('data-show','true');
-      form.reset();
-    }, 700);
+    });
   });
 
   document.getElementById('bk-form').addEventListener('submit', function(e){
@@ -2027,22 +2049,38 @@ body.proto-off{padding-bottom:0}
       return;
     }
 
-    /* PROTOTYPE ONLY — no appointment is created anywhere and no calendar is
-       touched. TODO (Phase 2 backend): a real scheduling API sitting behind
-       the firm's shared calendar, to offer actual open slots instead of a
-       time band, hold the slot, and send calendar invites on confirmation. */
+    /* LIVE — posts to Formspree (see the form's action attribute), which
+       relays the request by email. This is a REQUEST, not a confirmed
+       booking: no calendar is checked or held. TODO: a real scheduling API
+       sitting behind the firm's shared calendar, to offer actual open slots
+       instead of a time band, hold the slot, and send calendar invites on
+       confirmation. */
     var area = document.getElementById('bk-area').value;
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
     msg.removeAttribute('data-show');
-    setTimeout(function(){
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response){
       submitBtn.disabled = false;
       submitBtn.textContent = 'Request appointment';
-      msg.textContent = 'Thank you. In the live site this request would reach the lawyer leading ' +
-        area + ', who will confirm a time by phone or email within one working day.';
+      if(response.ok){
+        msg.textContent = 'Thank you. Your request concerning ' + area +
+          ' has been sent — the lawyer leading it will confirm a time by phone or email within one working day.';
+        msg.setAttribute('data-show','true');
+        form.reset();
+      } else {
+        msg.textContent = 'Sorry, something went wrong sending this. Please try again, or call us on +256 414 230 478.';
+        msg.setAttribute('data-show','true');
+      }
+    }).catch(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request appointment';
+      msg.textContent = 'Sorry, something went wrong sending this. Please check your connection and try again, or call us on +256 414 230 478.';
       msg.setAttribute('data-show','true');
-      form.reset();
-    }, 700);
+    });
   });
 
   /* ---- prototype ribbon ---- */
